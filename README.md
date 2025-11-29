@@ -1,6 +1,6 @@
 <h1>ExpNo 1 :Developing AI Agent with PEAS Description</h1>
-<h3>Name: Saravanan N</h3>
-<h3>Register Number/Staff Id: TSML006</h3>
+<h3>Name: Vishal S</h3>
+<h3>Register Number : 212223110063</h3>
 
 
 <h3>AIM:</h3>
@@ -40,3 +40,57 @@
 <p>Treat unhealthy patients in each room. And check for the unhealthy patients in random room</p>
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
+
+**PROGRAM**
+
+```
+import random
+
+class HospitalEnvironment:
+    def _init_(self):
+        # Two rooms: Room1 and Room2 with random patient temperatures
+        self.rooms = {"Room1": random.uniform(97, 102),
+                      "Room2": random.uniform(97, 102)}
+
+class MedicinePrescribingAgent:
+    def _init_(self, environment):
+        self.env = environment
+        self.location = "Room1"   # Start in Room1
+        self.performance = 0
+
+    def sense(self):
+        return self.env.rooms[self.location]
+
+    def prescribe(self, temp):
+        if temp > 98.5:
+            print(f"[{self.location}] Temp={temp:.1f} → Prescribed Medicine ✅")
+            self.performance += 1
+        else:
+            print(f"[{self.location}] Temp={temp:.1f} → No medicine needed")
+        return
+
+    def move(self):
+        # Switch between rooms
+        self.location = "Room2" if self.location == "Room1" else "Room1"
+        self.performance -= 0.1
+        print(f"Moved to {self.location} (-0.1 penalty)")
+
+    def run(self, steps=5):
+        for _ in range(steps):
+            temp = self.sense()
+            self.prescribe(temp)
+            self.move()
+        print("\nFinal Performance Score:", self.performance)
+
+# --- Simulation Run ---
+hospital = HospitalEnvironment()
+agent = MedicinePrescribingAgent(hospital)
+agent.run(steps=6)
+```
+**OUTPUT**
+
+<img width="590" height="386" alt="image" src="https://github.com/user-attachments/assets/8600ad7d-a3fa-41be-82ff-7bcb114994af" />
+
+**RESULT**
+
+Hence, the solution for the given AI problem is found.
